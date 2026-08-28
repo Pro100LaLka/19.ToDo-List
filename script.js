@@ -29,22 +29,30 @@ function toggleTask(target) {
   markAll.textContent = "Mark All";
 }
 
-// joke feature
-function handleP3tri() {
+// joke feature ------------------------------------------------
+const jokeKeywords = ["P3TRI", "DRAKE"];
+function removeJoke() {
   taskInput.style.color = "black";
   taskInput.value = "";
-  taskInput.removeEventListener("focus", handleP3tri);
+  taskInput.removeEventListener("focus", removeJoke);
 }
+function handleJoke() {
+  for (const keyword of jokeKeywords) {
+    if (taskInput.value.toLowerCase().includes(keyword.toLowerCase())) {
+      taskInput.value = `${keyword} IS NOT ALLOWED HERE!`;
+      taskInput.style.color = "red";
+      taskInput.blur();
+      taskInput.addEventListener("focus", removeJoke);
+      return true;
+    }
+  }
+}
+// joke feature ------------------------------------------------
 
 function addTask() {
   // joke feature
-  if (taskInput.value.toLowerCase().includes("p3tri")) {
-    taskInput.value = "P3TRI IS NOT ALLOWED HERE!";
-    taskInput.style.color = "red";
-    taskInput.blur();
-    taskInput.addEventListener("focus", handleP3tri);
-    return;
-  }
+  if (handleJoke()) return;
+  //joke feature
 
   if (taskInput.value.length != 0) {
     taskList.innerHTML += `<li class="task"><span class="task-complete" role="checkbox" aria-checked="false" tabindex="0"></span><span class="task-text"></span><button class="task-delete"><i class="task-delete-icon fa-solid fa-xmark"></i></button></li>`;
