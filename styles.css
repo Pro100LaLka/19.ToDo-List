@@ -1,0 +1,397 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+:root {
+  --light-weight: 200;
+  --normal-weight: 400;
+  --bold-weight: 700;
+
+  --primary-dark-color: rgb(42, 44, 65);
+  --primary-dark-color-lighter: rgb(64, 67, 99);
+  --primary-light-color: rgb(218, 215, 215);
+  --primary-light-color-darker: rgb(218, 195, 195);
+  --primary-light-color-lighter: rgb(224, 220, 220);
+  --lightgreen-color: rgb(44, 231, 44);
+  --lightgreen-color-light: rgb(112, 223, 112);
+
+  --background: linear-gradient(
+    135deg,
+    rgb(230, 230, 230) 20%,
+    rgb(190, 179, 179) 100%
+  );
+
+  --dark-text-color: rgb(25, 46, 92);
+  --dark-text-color-darker: rgb(15, 26, 51);
+
+  --border-color-light: rgb(141, 135, 135);
+  --border-color-dark: rgb(110, 103, 103);
+  --border-color-redish: rgb(109, 86, 86);
+}
+
+body {
+  background: linear-gradient(
+    135deg,
+    rgb(230, 230, 230) 20%,
+    rgb(190, 179, 179) 100%
+  );
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(2rem, 1fr) minmax(auto, 700px) minmax(2rem, 1fr);
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.main {
+  grid-column: 2;
+  background-color: var(--primary-dark-color);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 4rem 3rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 0 10px black;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: var(--normal-weight);
+  margin-bottom: 3rem;
+}
+
+.input-container {
+  display: grid;
+  grid-template: repeat(2, auto) / 1fr auto;
+  width: 95%;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.task-input-label {
+  font-size: 2rem;
+  grid-column: 1 / span 2;
+}
+
+.task-input {
+  padding: 0.5rem;
+  font-size: 2rem;
+}
+
+.task-add {
+  color: var(--dark-text-color);
+  font-size: 1.5rem;
+  font-weight: var(--bold-weight);
+  padding: 0.5rem;
+  appearance: none;
+  border: none;
+  background-image: linear-gradient(
+    45deg,
+    var(--lightgreen-color-light) 0%,
+    var(--lightgreen-color) 100%
+  );
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tasks-list {
+  list-style-type: none;
+  background-image: linear-gradient(
+    15deg,
+    var(--primary-light-color) 0%,
+    var(--primary-light-color-darker) 100%
+  );
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-radius: 6px;
+  height: 60dvh;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  outline: 3px solid var(--border-color-redish);
+  box-shadow: 0 0 8px var(--primary-light-color);
+}
+
+.task {
+  border: 2px solid var(--border-color-light);
+  border-radius: 3px;
+  padding: 0 0.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.task.deleted ~ .task {
+  animation: tasksAfterDeleted 0.5s ease;
+}
+
+.task-complete {
+  appearance: none;
+  margin: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: var(--primary-light-color-lighter);
+  outline: 2px solid var(--border-color-dark);
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+.task-complete:focus {
+  box-shadow: 0 0 0 3px black;
+}
+
+.task-complete::after {
+  content: "✓";
+  color: rgb(0, 211, 0);
+  font-family: serif;
+  font-size: 2.5rem;
+  font-weight: 1000;
+  position: absolute;
+  top: -1.4rem;
+  scale: 0;
+}
+
+.task-complete.checked::after {
+  scale: 1;
+}
+
+.task.complete.animate .task-complete::after {
+  animation: checkmarkAppear 0.5s ease;
+}
+
+.task:not(.complete).animate .task-complete::after {
+  animation: checkmarkDisappear 0.5s ease;
+}
+
+.task-text {
+  font-size: 2rem;
+  color: var(--dark-text-color);
+  margin: 0.5rem;
+  position: relative;
+  justify-self: start;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+}
+
+.task .task-text::after {
+  content: "";
+  background-color: red;
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  top: 1.15rem;
+  left: 0;
+  box-shadow:
+    0 2.4rem red,
+    0 4.8rem red;
+  translate: -100%;
+}
+
+.task.complete .task-text::after {
+  translate: 0;
+}
+
+.task.complete.animate .task-text::after {
+  animation: lineThroughAppear 0.5s ease;
+}
+
+.task:not(.complete).animate .task-text::after {
+  animation: lineThroughDisappear 0.5s ease;
+}
+
+.task-delete {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  color: red;
+  font-size: 3rem;
+  margin-right: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btns-container {
+  display: flex;
+  width: 95%;
+  justify-content: space-between;
+}
+
+.btns-container button {
+  width: 25%;
+  padding: 1rem;
+  font-size: 1.5rem;
+  appearance: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--dark-text-color-darker);
+  font-weight: var(--bold-weight);
+}
+
+.mark-all {
+  background-image: radial-gradient(
+    circle,
+    var(--lightgreen-color),
+    var(--lightgreen-color-light)
+  );
+}
+
+.delete-all {
+  background-image: radial-gradient(
+    circle,
+    rgba(233, 12, 12, 0.877),
+    rgb(206, 66, 66)
+  );
+}
+
+dialog {
+  inset: 0;
+  margin: 30dvh auto auto;
+  padding: 2rem;
+  border: 2px solid var(--border-color-redish);
+  background-color: var(--primary-light-color-lighter);
+  border-radius: 5px;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(2px) brightness(0.8);
+}
+
+dialog h1 {
+  margin-bottom: 0.2rem;
+  font-size: 3.5rem;
+  text-align: center;
+}
+
+dialog p {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: var(--bold-weight);
+  text-align: center;
+}
+
+dialog strong {
+  color: red;
+}
+
+.dialog-btns-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+dialog button {
+  appearance: none;
+  border: none;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: var(--bold-weight);
+  color: white;
+  border-radius: 5px;
+  width: 40%;
+}
+
+dialog .yes {
+  background-color: red;
+}
+
+dialog .no {
+  background-color: var(--primary-dark-color);
+}
+
+button:not(.task-delete):hover,
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.212);
+}
+
+.task-delete:hover {
+  filter: brightness(0.7);
+}
+
+button:not(.task-delete):active {
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.377);
+}
+
+.task-delete:active {
+  filter: brightness(0.5);
+}
+
+.tasks-list::-webkit-scrollbar {
+  width: 10px;
+  background: var(--primary-light-color-darker);
+  border-radius: 0 5px 5px 0;
+}
+
+.tasks-list::-webkit-scrollbar-thumb {
+  background-color: var(--primary-dark-color-lighter);
+  border-radius: 10px;
+  border: 2px solid var(--primary-light-color-darker);
+  border-left: none;
+}
+
+@keyframes lineThroughAppear {
+  0% {
+    translate: -100% 0;
+  }
+
+  100% {
+    translate: 0 0;
+  }
+}
+
+@keyframes lineThroughDisappear {
+  0% {
+    translate: 0 0;
+  }
+
+  100% {
+    translate: 100% 0;
+  }
+}
+
+@keyframes checkmarkAppear {
+  0% {
+    scale: 0;
+    translate: -20% 40%;
+    rotate: -45deg;
+  }
+  100% {
+    scale: 1;
+    translate: 0 0;
+    rotate: 0;
+  }
+}
+
+@keyframes checkmarkDisappear {
+  0% {
+    scale: 1;
+    translate: 0 0;
+    rotate: 0;
+  }
+  100% {
+    scale: 0;
+    translate: -40% 20%;
+    rotate: -60deg;
+  }
+}
+
+@keyframes tasksAfterDeleted {
+  0% {
+    translate: 0 100%;
+  }
+  100% {
+    translate: 0 0;
+  }
+}

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <dialog class="task-delete-confirmation">
+      <form method="dialog">
+        <h1>Are you sure</h1>
+        <p>you want to delete this task?</p>
+        <div class="dialog-btns-container">
+          <button class="confirm-delete yes" type="submit" value="yes">
+            Yes, delete
+          </button>
+          <button class="confirm-delete no" type="submit" value="no">No</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="delete-all-confirmation">
+      <form method="dialog">
+        <h1>Are you sure</h1>
+        <p>you want to delete <strong>ALL</strong> tasks?</p>
+        <div class="dialog-btns-container">
+          <button
+            class="confirm-delete yes"
+            type="submit"
+            value="yes"
+            tabindex="2"
+          >
+            Yes, delete
+          </button>
+          <button
+            class="confirm-delete no"
+            type="submit"
+            value="no"
+            tabindex="1"
+          >
+            No
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <main class="main">
+      <h1 class="title">To-Do List</h1>
+
+      <div class="input-container">
+        <label for="task-input" class="task-input-label"
+          >Input your task here:</label
+        >
+        <input
+          type="text"
+          name="task-input"
+          id="task-input"
+          class="task-input"
+          maxlength="100"
+          placeholder="e.g. Make a tea"
+        />
+        <button class="task-add">Add</button>
+      </div>
+
+      <ul class="tasks-list">
+        <li class="task">
+          <span
+            class="task-complete"
+            role="checkbox"
+            aria-checked="false"
+            tabindex="0"
+          ></span>
+          <span class="task-text">Make a tea</span>
+          <button class="task-delete">
+            <i class="task-delete-icon fa-solid fa-xmark"></i>
+          </button>
+        </li>
+        <li class="task">
+          <span
+            class="task-complete"
+            role="checkbox"
+            aria-checked="false"
+            tabindex="0"
+          ></span>
+          <span class="task-text">Order global chicken</span>
+          <button class="task-delete">
+            <i class="task-delete-icon fa-solid fa-xmark"></i>
+          </button>
+        </li>
+      </ul>
+      <div class="btns-container">
+        <button class="mark-all">Mark All</button>
+        <button class="delete-all">Delete All</button>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
