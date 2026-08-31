@@ -125,6 +125,10 @@ function editTask(task) {
     changeField.style.height = changeField.scrollHeight + "px";
   });
 
+  changeField.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === "Escape") changeField.blur();
+  });
+
   changeField.addEventListener("blur", (e) => {
     const newText = changeField.value;
 
