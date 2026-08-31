@@ -123,11 +123,11 @@ body {
 .task {
   border: 2px solid var(--border-color-light);
   border-radius: 3px;
-  padding: 0 0.5rem;
+  padding: 0 0.8rem;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
-  gap: 0.1rem;
+  gap: 0.5rem;
 }
 
 .task.deleted ~ .task {
@@ -176,12 +176,27 @@ body {
 .task-text {
   font-size: 2rem;
   color: var(--dark-text-color);
-  margin: 0.5rem;
+  margin: 0.8rem 0.4rem;
   position: relative;
   justify-self: start;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  max-width: 95%;
+  max-width: calc(100% - 0.4rem);
+}
+
+.change-field {
+  font-size: 2rem;
+  appearance: none;
+  border: none;
+  margin: 0.4rem 0;
+  padding: 0.4rem;
+  max-width: 100%;
+  background-color: #ffffffa8;
+  resize: none;
+  font-family: "Roboto", sans-serif;
+  overflow-y: hidden;
+  color: var(--dark-text-color);
+  border-radius: 5px;
 }
 
 .task .task-text::after {
@@ -210,13 +225,35 @@ body {
   animation: lineThroughDisappear 0.5s ease;
 }
 
+.task-edit,
+.save-changes {
+  appearance: none;
+  border: none;
+  font-size: 2.2rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-edit {
+  color: rgb(104, 104, 104);
+}
+
+.save-changes {
+  color: rgb(0, 182, 0);
+}
+
 .task-delete {
   appearance: none;
   border: none;
   background-color: transparent;
   color: red;
-  font-size: 3rem;
-  margin-right: 0.3rem;
+  font-size: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -311,20 +348,20 @@ dialog .no {
   background-color: var(--primary-dark-color);
 }
 
-button:not(.task-delete):hover,
+button:not(:is(.task-delete, .task-edit, .save-changes)):hover,
 ::-webkit-scrollbar-thumb:hover {
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.212);
 }
 
-.task-delete:hover {
+:is(.task-delete, .task-edit, .save-changes):hover {
   filter: brightness(0.7);
 }
 
-button:not(.task-delete):active {
+button:not(:is(.task-delete, .task-edit, .save-changes)):active {
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.377);
 }
 
-.task-delete:active {
+:is(.task-delete, .task-edit, .save-changes):active {
   filter: brightness(0.5);
 }
 
