@@ -11,7 +11,7 @@ let animationTimeout;
 
 const localStorageManager = {
   loadLocalStorage: function () {
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    const tasks = JSON.parse(localStorage.getItem("tasks-old"));
     if (tasks === null) return;
 
     if (tasks.length !== 0) {
@@ -24,32 +24,32 @@ const localStorageManager = {
   },
 
   addTaskToLocalStorage: function (taskText, isComplete) {
-    const localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
+    const localStorageTasks = JSON.parse(localStorage.getItem("tasks-old"));
     localStorageTasks.push({ text: taskText, isComplete: isComplete });
-    localStorage.setItem("tasks", JSON.stringify(localStorageTasks));
+    localStorage.setItem("tasks-old", JSON.stringify(localStorageTasks));
   },
 
   removeTaskFromLocalStorage: function (index) {
-    const localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
+    const localStorageTasks = JSON.parse(localStorage.getItem("tasks-old"));
     localStorageTasks.splice(index, 1);
-    localStorage.setItem("tasks", JSON.stringify(localStorageTasks));
+    localStorage.setItem("tasks-old", JSON.stringify(localStorageTasks));
   },
 
   updateTaskStatusInLocalStorage: function (index) {
-    const localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
+    const localStorageTasks = JSON.parse(localStorage.getItem("tasks-old"));
     localStorageTasks[index].isComplete = !localStorageTasks[index].isComplete;
-    localStorage.setItem("tasks", JSON.stringify(localStorageTasks));
+    localStorage.setItem("tasks-old", JSON.stringify(localStorageTasks));
   },
 
   updateTaskTextInLocalStorage: function (index, newText) {
-    const localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
+    const localStorageTasks = JSON.parse(localStorage.getItem("tasks-old"));
     localStorageTasks[index].text = newText;
-    localStorage.setItem("tasks", JSON.stringify(localStorageTasks));
+    localStorage.setItem("tasks-old", JSON.stringify(localStorageTasks));
   },
 };
 
-if (localStorage.getItem("tasks") === null)
-  localStorage.setItem("tasks", JSON.stringify([]));
+if (localStorage.getItem("tasks-old") === null)
+  localStorage.setItem("tasks-old", JSON.stringify([]));
 
 localStorageManager.loadLocalStorage();
 
@@ -252,11 +252,11 @@ markAll.addEventListener("click", () => {
 
   markAll.textContent = allMarked ? "Mark All" : "Unmark All";
 
-  const localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
+  const localStorageTasks = JSON.parse(localStorage.getItem("tasks-old"));
   if (!allMarked) {
     localStorageTasks.forEach((task) => (task.isComplete = true));
   } else localStorageTasks.forEach((task) => (task.isComplete = false));
-  localStorage.setItem("tasks", JSON.stringify(localStorageTasks));
+  localStorage.setItem("tasks-old", JSON.stringify(localStorageTasks));
 });
 
 deleteAll.addEventListener("click", () => {
@@ -274,6 +274,6 @@ deleteAllDialog.addEventListener("close", () => {
     taskList.innerHTML = "";
     markAll.textContent = "Mark All";
 
-    localStorage.setItem("tasks", JSON.stringify([]));
+    localStorage.setItem("tasks-old", JSON.stringify([]));
   }
 });
